@@ -1,9 +1,15 @@
-import React from 'react';
+//Components 
+import Nav from "./components/Nav";
 
-const App = () => {
+//Css
+import './App.css'
+
+
+
+function App() {
   return (
-    <div>
-      
+    <div className='App'>
+      <Nav />
     </div>
   );
 }
