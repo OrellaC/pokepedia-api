@@ -6,7 +6,7 @@ import UserContext from '../../contexts/UserContext';
 
 const Nav = () => {
     const user = useContext(UserContext)
-    console.log('nav', user)
+    // console.log('nav', user)
 
     //Below we will use link react router to replace all of our anchor tags. We replaced all of the href to "to" and the a tags to "link"
     return (

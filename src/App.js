@@ -39,6 +39,7 @@ const App = () => {
     }
   }
 
+// console.log('pokeList', pokeList)
 
   return (
     <div className='App'>
@@ -49,9 +50,10 @@ const App = () => {
         {/* We need to wrap all our routes inside react router Routes component  */}
         <Routes>
           <Route path="/" element={<Home />} />
+          {/* This is how we pass props to components call state after component */}
           <Route path='login' element={<Login setUser={setUser} />} />
           {/* The forward slash between pokemon and list matches the "to"/path on pokemon list on the nav index.js. Both names should match */}
-          <Route path="pokemon/list" element={<PokemonList />} />
+          <Route path="pokemon/list" element={<PokemonList pokeList={pokeList} itemsPerPage={8}/>} />
         </Routes>
 
 
