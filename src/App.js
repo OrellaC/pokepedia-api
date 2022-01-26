@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Routes, Route } from 'react-router-dom'
+import axios from 'axios'
 //Components 
 import Nav from "./components/Nav"
 //Pages
@@ -18,6 +19,26 @@ const App = () => {
 
   //we will pass on our user to all of App's children via the provider value prop
   const [user, setUser] = useState('')
+  const[pokeList, setPokeList] = useState([])
+
+
+  useEffect(() =>{
+    fetchPokemon()
+
+    //Dependency array(empty brackets): if empty, it will call useEffect once only when DOM component loads
+  }, [])
+
+  const fetchPokemon = async () => {
+    try{
+      const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1118")
+
+      setPokeList(response.data.results)
+
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
 
   return (
     <div className='App'>
