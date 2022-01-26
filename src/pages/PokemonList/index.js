@@ -23,7 +23,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
             const pokeURLs = []
 
-            for(let i = itemOffset + 1; i <= endOffset; i++){
+            for (let i = itemOffset + 1; i <= endOffset; i++) {
                 pokeURLs.push(`https://pokeapi.co/api/v2/pokemon/${i}`)
             }
 
@@ -41,24 +41,32 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
     }, [itemOffset, itemsPerPage]);
 
     const currPagePokemon = (pokeURLs) => {
-            try {
-                //Axios all() makes all concurrrent requests
-                //instead of doing individuals req, we can pragmatically make multiples requests. If one of our Promises fails, the entire request fails
-                axios.all()
-    
-            } catch (error) {
+        try {
+            //Axios all() makes all concurrrent requests
+            //instead of doing individuals req, we can pragmatically make multiples requests. If one of our Promises fails, the entire request fails
 
-            }
+            const pokeArr = []
+            axios.all(pokeURLs.map(async (url) => {
+                const response = await axios.get(url)
+                // console.log(response.data)
+                pokeArr.push(response.data)
+                setCurrentPokemon(pokeArr.flat())
+                // console.log('POKE ARRAY', pokeArr)
+            }))
+
+        } catch (error) {
 
         }
+
     }
+
 
     const Pokemon = () => {
         return (
             <>
                 {
-                    pokeList &&
-                    pokeList.map(pokemon => (
+                    currentPokemon &&
+                    currentPokemon.map(pokemon => (
                         <div>
                             <h3>{pokemon.name}</h3>
                         </div>
