@@ -46,12 +46,12 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
             //instead of doing individuals req, we can pragmatically make multiples requests. If one of our Promises fails, the entire request fails
 
             const pokeArr = []
-            axios.all(pokeURLs.map(async (url) => {
+           axios.all(pokeURLs.map(async (url) => {
                 const response = await axios.get(url)
                 // console.log(response.data)
                 pokeArr.push(response.data)
-                setCurrentPokemon(pokeArr.flat())
                 // console.log('POKE ARRAY', pokeArr)
+                setCurrentPokemon(pokeArr.flat())
             }))
 
         } catch (error) {
