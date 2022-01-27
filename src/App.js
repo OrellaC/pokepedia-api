@@ -72,7 +72,7 @@ const App = () => {
             />
           } />
 
-          <Route path="favorites" element={<Favorites />} />
+          <Route path="favorites" element={<Favorites favorites={favorites} />} />
         </Routes>
 
 
