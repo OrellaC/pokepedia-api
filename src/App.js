@@ -7,6 +7,7 @@ import Nav from "./components/Nav"
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PokemonList from "./pages/PokemonList";
+import Favorites from "./pages/Favorites";
 //Contexts
 import UserContext from "./contexts/UserContext";
 //Css
@@ -19,27 +20,36 @@ const App = () => {
 
   //we will pass on our user to all of App's children via the provider value prop
   const [user, setUser] = useState('')
-  const[pokeList, setPokeList] = useState([])
+  const [pokeList, setPokeList] = useState([])
+  const [favorites, setFavorites] = useState([])
 
 
-  useEffect(() =>{
+  useEffect(() => {
     fetchPokemon()
 
     //Dependency array(empty brackets): if empty, it will call useEffect once only when DOM component loads
   }, [])
 
   const fetchPokemon = async () => {
-    try{
+    try {
       const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1118")
 
       setPokeList(response.data.results)
 
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
-// console.log('pokeList', pokeList)
+  const addToFavorites = (pokemon) => {
+    //When we click link inside Pokemon list, send clicked Pokemon back to App
+    //Trigger this function to update our state
+    //App will then pass our state as props to Favorites 
+    console.log('we added', pokemon)
+    setFavorites([...favorites, pokemon])
+  }
+
+  // console.log('pokeList', pokeList)
 
   return (
     <div className='App'>
@@ -53,7 +63,16 @@ const App = () => {
           {/* This is how we pass props to components call state after component */}
           <Route path='login' element={<Login setUser={setUser} />} />
           {/* The forward slash between pokemon and list matches the "to"/path on pokemon list on the nav index.js. Both names should match */}
-          <Route path="pokemon/list" element={<PokemonList pokeList={pokeList} itemsPerPage={8}/>} />
+          <Route path="pokemon/list" element={
+            <PokemonList
+            // This is called passing props
+              pokeList={pokeList}
+              itemsPerPage={8}
+              addToFavorites={addToFavorites}
+            />
+          } />
+
+          <Route path="favorites" element={<Favorites />} />
         </Routes>
 
 

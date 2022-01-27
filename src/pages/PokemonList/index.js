@@ -7,7 +7,7 @@ import "./styles.css"
 //Install npm i react-paginate -- Pagination packet https://www.npmjs.com/package/react-paginate
 
 
-const PokemonList = ({ pokeList, itemsPerPage }) => {
+const PokemonList = ({ pokeList, itemsPerPage, addToFavorites }) => {
     // console.log('props', pokeList)
     // We start with an empty list of pokeList.
     const [currentPokemon, setCurrentPokemon] = useState(null);
@@ -39,7 +39,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
             // if(currentPokemon) currPagePokemon()
             setPageCount(Math.ceil(length / itemsPerPage));
         } catch (error) {
-            console.log(error)
+            // console.log(error)
 
         }
 
@@ -83,6 +83,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
                             <div className="card-body">
                                 <h5 className="card-title">{pokemon.name}</h5>
                                 <p className="card-text">Order: {pokemon.id}</p>
+                                <button className='btn btn-danger'onClick={() => addToFavorites(pokemon)}> Like </button>
                                 <a href="#" className="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
@@ -102,7 +103,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
         setItemOffset(newOffset);
     };
 
-    console.log('current pokemon', currentPokemon)
+    // console.log('current pokemon', currentPokemon)
 
     return (
         <div>
