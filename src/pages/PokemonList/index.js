@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate'
 import axios from 'axios'
+//css
+import "./styles.css"
 
 //Install npm i react-paginate -- Pagination packet https://www.npmjs.com/package/react-paginate
 
@@ -29,10 +31,10 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
             // console.log('urls', pokeURLs)
             currPagePokemon(pokeURLs)
-
+            const length = pokeList.length ? pokeList.length : 1118
             // setCurrentPokemon(pokeList.slice(itemOffset, endOffset));
             // if(currentPokemon) currPagePokemon()
-            setPageCount(Math.ceil(pokeList.length / itemsPerPage));
+            setPageCount(Math.ceil(length / itemsPerPage));
         } catch (error) {
             console.log(error)
 
@@ -46,7 +48,7 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
             //instead of doing individuals req, we can pragmatically make multiples requests. If one of our Promises fails, the entire request fails
 
             const pokeArr = []
-           axios.all(pokeURLs.map(async (url) => {
+            axios.all(pokeURLs.map(async (url) => {
                 const response = await axios.get(url)
                 // console.log(response.data)
                 pokeArr.push(response.data)
@@ -63,16 +65,21 @@ const PokemonList = ({ pokeList, itemsPerPage }) => {
 
     const Pokemon = () => {
         return (
-            <>
+            <div id='pokemon-container'>
                 {
                     currentPokemon &&
                     currentPokemon.map(pokemon => (
-                        <div>
-                            <h3>{pokemon.name}</h3>
+                        <div className="card poke-card" key={pokemon.id}>
+                            <img src={pokemon.sprites.front_shiny} className="card-img-top" alt="..." />
+                                <div className="card-body">
+                                    <h5 className="card-title">Name: {pokemon.name}</h5>
+                                    <p className="card-text">Order: {pokemon.id}</p>
+                                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                                </div>
                         </div>
                     ))
                 }
-            </>
+            </div>
         );
     }
 
